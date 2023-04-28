@@ -1,13 +1,3 @@
-# AMS
-
-一个连续体相当于一个节点
-
-amsd配置
-
-ramsgate 远程网关
-
-一个控制中心订阅多个宇航员的消息
-
 # 概述
 
 Asynchronous Message Service (AMS）
@@ -32,7 +22,8 @@ RAMS支持使用RAMS网关在其他连续体中的模块之间进行通信
 
 在AMS操作中，Continuum是最大的单元，通过配置服务器进行管理。提供相同功能的一组continuum称为venture，并具有内在venture编号。venture可以由多个continuum组成，单个continuum中的特定venture称为message space。换句话说，message space是continuum和venture的交叉点。venture中的单个module集称为unit。最后，单个continuum中的unit称为cell。cell是continuum和unit的交集
 
-![image-20221010193328979](C:\Users\15616\AppData\Roaming\Typora\typora-user-images\image-20221010193328979.png)
+<img width="378" alt="image" src="https://user-images.githubusercontent.com/98028423/235210055-c72b4e03-f44f-4cff-ab89-5adb01bfd455.png">
+
 
 C为配置服务器、R为注册器、棕与紫 两个连续体、蓝与橙 两个消息空间、黑色 一个venture包括红与灰 两个Unit、19和6 两个模块
 
@@ -102,7 +93,7 @@ AMS消息交换基本上是异步的。也就是说，每条消息都是以“�
 
 基于AMS的数据系统中的大多数消息交换都是在“publish-subscribe”模块上进行的
 
-![image-20220926190910700](C:\Users\15616\AppData\Roaming\Typora\typora-user-images\image-20220926190910700.png)
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/98028423/235210116-dc0edef6-1ea3-4b85-bbe0-b72af874536c.png">
 
 - modules
 - registrars
@@ -117,15 +108,13 @@ AMS消息交换基本上是异步的。也就是说，每条消息都是以“�
 
 registrar向配置服务器注册包含消息空间的连续体
 
-> 飞行数据系统示例
->
-> <img src="C:\Users\15616\AppData\Roaming\Typora\typora-user-images\image-20221010194811520.png" alt="image-20221010194811520" style="zoom:67%;" />
+<img width="391" alt="image" src="https://user-images.githubusercontent.com/98028423/235210181-4e02e4b2-ecd9-47be-a93f-cf975e229455.png">
 >
 > 热传感器监测模块6和12定期在AAMS消息中发布有关主题“温度”的热传感器数据。两个板载模块订阅“温度”：一个实时热报警模块（模块#19）和一个注册为“遥测源”的模块（模块#4）。每当模块6或模块12发布“温度”消息时，模块4和模块19都会立即收到副本。在收到“温度”信息后，模块4发布热遥测数据包，以传输至地球上的任务操作中心
 
 ### RAMS
 
-![image-20220926192839277](C:\Users\15616\AppData\Roaming\Typora\typora-user-images\image-20220926192839277.png)
+<img width="419" alt="image" src="https://user-images.githubusercontent.com/98028423/235210243-d0f7b3bd-6fed-4e39-b4c0-096476fb8a77.png">
 
 两个连续体 continuum、一个venture、两个配置服务器、application Q、authority R
 
@@ -133,13 +122,13 @@ registrar向配置服务器注册包含消息空间的连续体
 
 每个RAMS网关都有两个通信环境的接口：其服务的AMS消息空间和RAMS网络，相互感知的RAMS网关的网状或树状结构，使在一个消息空间中生成的AMS信息能够转发到同一venture的其他消息空间
 
-![image-20221010195147751](C:\Users\15616\AppData\Roaming\Typora\typora-user-images\image-20221010195147751.png)
+<img width="359" alt="image" src="https://user-images.githubusercontent.com/98028423/235210282-91d9d9c3-aa3d-4f14-bb9c-d99b576bb290.png">
 
 **RAMS网关**使用**TCP/IP**与消息空间中的其他模块交换**AAMS**消息，但在CCSDS封装数据包和遥测/遥控链路上使用**DTN**捆绑协议和Licklider传输协议与月球车上的对应模块交换**RAMS**消息
 
 > 端到端任务数据系统示例
 >
-> ![image-20221010194654083](C:\Users\15616\AppData\Roaming\Typora\typora-user-images\image-20221010194654083.png)
+> <img width="395" alt="image" src="https://user-images.githubusercontent.com/98028423/235210363-73943b7c-bc29-4e95-b3aa-49a5cb2b51bc.png">
 >
 > 每当模块6或模块12发布“温度”消息时，模块19和模块1（“漫游者”连续统中的“实时漫游者操作”RAMS网关）都会立即接收副本。漫游者的RAMS网关使用可靠的延迟/中断容限网络（DTN）协议将“温度”消息传递给MOC中的对应方，然后MOC将该消息转发给两个本地订户，即模块6和8。
 
